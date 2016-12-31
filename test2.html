@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>scroll</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .main {
+            width: 200px;
+            height: 50px;
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+        #box {
+            position: relative;
+        }
+        ul {
+            position: absolute;
+        }
+        li {
+            list-style: none;
+            height: 50px;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main" id="main">
+        <div id="box">
+            <ul id="ul1">
+                <li>444444444</li>
+                <li>555555555</li>
+                <li>666666666</li>
+            </ul>
+            <ul id="ul2">
+                <li>444444444</li>
+                <li>555555555</li>
+                <li>666666666</li>
+            </ul>
+
+        </div>
+    </div>
+    <div>hahahahahah</div>
+    <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var Marquee_x = function(wholeHeight){
+            console.log(3333);
+            $marquee_ul1.css({"top": (--x) + "px"});
+            $marquee_ul2.css({"top": (--y) + "px"});
+            if( x == -wholeHeight ){ // ul1从左边刚好滚出容器时
+                x = wholeHeight; // 把ul1放到右边去
+            }
+            if( y == -wholeHeight ){ // ul2从左边刚好滚出容器时
+                y = wholeHeight; // 把ul2放到右边去
+            }
+        };
+        var $marquee = $('#box'); // 主语是ul的父级div
+                // 为滚动时首尾相接，在HTML结构中将包含循环体的ul人肉复制一份，共2个相同的ul
+                var $marquee_uls = $marquee.find("ul");
+                var $marquee_ul1 = $( $marquee_uls[0] ),
+                      $marquee_ul2 = $( $marquee_uls[1] );
+                      console.log($marquee_ul1,$marquee_ul2);
+                var lis = $marquee_ul1.find("li");
+                var len = lis.length; // 单个ul里的li的个数
+                // if( len == 0 ){ // 无内容时，需要一个特殊处理
+                //     $marquee_uls.hide();
+                //     // 此处是内容为空时的特殊处理，代码自理；也可以放个参数，用作回调。
+                //     return false;
+                // }
+                var wholeHeight = 50 * len; // 单个ul里的所有li横向排列一共占据的空间宽度，含margin
+                var boxWidth = parseInt(50); // 显示的容器宽度
+                var x = 0;
+                var y = wholeHeight;
+                $marquee_ul1.css({"height": wholeHeight + "px"}); // 根据li的实际占宽，动态写入ul的宽度
+                $marquee_ul2.css({"height": wholeHeight + "px", "top": y + "px" }); // 第二个ul放在第一个ul的右边
+                var timer = setInterval( function(){
+                    Marquee_x(wholeHeight);
+                }, 50 ); // 循环滚啊滚
+                $marquee.hover(function(){
+                   clearInterval( timer ); // 鼠标悬停时，清除滚动
+               }, function(){
+                   timer = setInterval(function(){
+                    Marquee_x(wholeHeight);
+                   }, 50 ); // 鼠标离开，继续滚啊滚
+               });
+
+    </script>
+</body>
+</html>
